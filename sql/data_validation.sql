@@ -47,3 +47,34 @@ FROM orders
 WHERE order_delivered_customer_date IS NOT NULL
   AND order_purchase_timestamp IS NOT NULL
   AND order_delivered_customer_date < order_purchase_timestamp;
+
+-- 6. Validate orders-to-customers relationship
+SELECT
+    COUNT(*) AS total_orders,
+    COUNT(c.customer_id) AS matched_customer_rows,
+    COUNT(DISTINCT o.customer_id) AS unique_order_customers,
+    COUNT(DISTINCT c.customer_id) AS matched_unique_customers
+FROM orders o
+LEFT JOIN customers c
+    ON o.customer_id = c.customer_id;
+
+-- 7. Validate orders-to-order_items relationship
+SELECT
+    COUNT(*) AS total_order_items,
+    COUNT(o.order_id) AS matched_order_items,
+    COUNT(DISTINCT oi.order_id) AS unique_orders_in_items,
+    COUNT(DISTINCT o.order_id) AS matched_unique_orders
+FROM order_items oi
+LEFT JOIN orders o
+    ON oi.order_id = o.order_id;
+
+
+-- 8. Validate payments-to-orders relationship
+SELECT
+    COUNT(*) AS total_payments,
+    COUNT(o.order_id) AS matched_payments,
+    COUNT(DISTINCT p.order_id) AS unique_payment_orders,
+    COUNT(DISTINCT o.order_id) AS matched_unique_orders
+FROM payments p
+LEFT JOIN orders o
+    ON p.order_id = o.order_id;

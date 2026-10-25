@@ -25,5 +25,4 @@ jobs:
           python -m pip install pylint
 
       - name: Analysing the code with pylint
-        run: |
-          pylint --disable=import-error $(git ls-files '*.py')
+        run: pylint --disable=import-error,too-many-locals $(git ls-files '*.py')

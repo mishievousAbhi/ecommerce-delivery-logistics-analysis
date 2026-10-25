@@ -3,14 +3,12 @@
 -- Project: E-commerce Delivery & Logistics Performance Analysis
 -- Owner: Mahima Prajapati
 -- File: schema.sql
--- Purpose: Define the orders table structure
 -- Database: MySQL - ecommerce_logistics
 -- =====================================================
 
--- Select the project database
 USE ecommerce_logistics;
 
--- Create the orders table if it does not exist
+-- Create orders table
 CREATE TABLE IF NOT EXISTS orders (
     order_id VARCHAR(50) NOT NULL,
     customer_id VARCHAR(50),
@@ -23,15 +21,19 @@ CREATE TABLE IF NOT EXISTS orders (
     CONSTRAINT pk_orders PRIMARY KEY (order_id)
 );
 
--- Verify the table structure
+-- Verify table structure
 DESCRIBE orders;
 
--- Verify the primary key
-SHOW KEYS
-FROM orders
+-- Verify primary key
+SHOW KEYS FROM orders
 WHERE Key_name = 'PRIMARY';
 
--- Verify total imported orders
+-- Verify imported row count
 SELECT COUNT(*) AS total_orders
 FROM orders;
 
+-- Check duplicate order IDs
+SELECT order_id, COUNT(*) AS occurrences
+FROM orders
+GROUP BY order_id
+HAVING COUNT(*) > 1;

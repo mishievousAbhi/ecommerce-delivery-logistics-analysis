@@ -1,0 +1,9 @@
+kpi,value,eligible_orders
+total_orders,99441.0,99441
+cancelled_orders,625.0,99441
+cancellation_rate_pct,0.63,99441
+average_delivery_days,12.56,96470
+average_delay_days,-11.18,96470
+on_time_orders,88644.0,96470
+late_orders,7826.0,96470
+on_time_rate_pct,91.89,96470

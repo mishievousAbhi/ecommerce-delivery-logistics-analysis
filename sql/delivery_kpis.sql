@@ -1,5 +1,4 @@
 
-
 -- =====================================================
 -- Project: E-commerce Delivery & Logistics Performance Analysis
 -- File: delivery_kpis.sql
@@ -14,13 +13,13 @@ SELECT
     COUNT(*) AS total_orders,
     SUM(LOWER(order_status) = 'canceled') AS cancelled_orders,
     ROUND(
-        100.0 * SUM(LOWER(order_status) = 'canceled') / COUNT(*),
+        100.0 * SUM(LOWER(order_status) = 'canceled')
+        / NULLIF(COUNT(*), 0),
         2
     ) AS cancellation_rate_pct
 FROM orders;
 
 -- KPI 2: Average delivery duration in days
--- Only delivered orders with valid purchase and delivery timestamps
 SELECT
     COUNT(*) AS eligible_orders,
     ROUND(
@@ -55,11 +54,13 @@ SELECT
     ) AS average_delay_days
 FROM orders
 WHERE LOWER(order_status) = 'delivered'
+  AND order_purchase_timestamp IS NOT NULL
   AND order_delivered_customer_date IS NOT NULL
-  AND order_estimated_delivery_date IS NOT NULL;
+  AND order_estimated_delivery_date IS NOT NULL
+  AND order_delivered_customer_date >= order_purchase_timestamp;
 
 -- KPI 4: On-time delivery rate
--- Denominator: delivered orders with both actual and estimated dates
+-- Denominator: delivered orders with valid actual and estimated dates
 SELECT
     COUNT(*) AS eligible_orders,
     SUM(
@@ -71,10 +72,12 @@ SELECT
     ROUND(
         100.0 * SUM(
             order_delivered_customer_date <= order_estimated_delivery_date
-        ) / COUNT(*),
+        ) / NULLIF(COUNT(*), 0),
         2
     ) AS on_time_rate_pct
 FROM orders
 WHERE LOWER(order_status) = 'delivered'
+  AND order_purchase_timestamp IS NOT NULL
   AND order_delivered_customer_date IS NOT NULL
-  AND order_estimated_delivery_date IS NOT NULL;
+  AND order_estimated_delivery_date IS NOT NULL
+  AND order_delivered_customer_date >= order_purchase_timestamp;

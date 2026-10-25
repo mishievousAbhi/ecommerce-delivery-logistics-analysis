@@ -1,4 +1,4 @@
-
+"""Calculate and export delivery performance KPIs."""
 from pathlib import Path
 import pandas as pd
 
@@ -9,7 +9,7 @@ OUTPUT_PATH = PROJECT_ROOT / "reports" / "delivery_kpi_summary.csv"
 
 
 def main():
-    # Load orders dataset
+    """Calculate delivery KPIs and save the summary report."""
     orders = pd.read_csv(DATA_PATH)
 
     # Parse timestamps

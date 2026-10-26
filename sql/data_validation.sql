@@ -78,3 +78,13 @@ SELECT
 FROM payments p
 LEFT JOIN orders o
     ON p.order_id = o.order_id;
+
+-- 9. Validate reviews-to-orders relationship
+SELECT
+    COUNT(*) AS total_reviews,
+    COUNT(r.order_id) AS reviews_with_order_id,
+    COUNT(o.order_id) AS matched_reviews,
+    COUNT(DISTINCT r.order_id) AS unique_review_orders
+FROM reviews r
+LEFT JOIN orders o
+    ON r.order_id = o.order_id;

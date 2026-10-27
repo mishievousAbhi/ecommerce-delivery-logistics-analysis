@@ -1,4 +1,4 @@
-
+"""Import order data into the MySQL database."""
 import csv
 from pathlib import Path
 import mysql.connector
@@ -20,6 +20,7 @@ COLUMNS = [
 
 
 def main():
+    """Load order data into the database."""
     if not CSV_PATH.exists():
         raise FileNotFoundError(f"CSV not found: {CSV_PATH}")
 

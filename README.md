@@ -128,6 +128,7 @@ ecommerce-delivery-logistics-analysis/
     ├── kpi_definitions.md
     ├── week2_progress.md
     ├── E-commerce_Logistics_Dashboard.pbix
+    ├── E-commerce_Logistics_Dashboard.pdf
     └── figures and analysis outputs
 ```
 *This is a logical overview of the repository. Refer to the actual folder contents for the complete file inventory.*
